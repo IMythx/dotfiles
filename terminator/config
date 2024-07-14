@@ -1,0 +1,36 @@
+[global_config]
+focus = mouse
+  window_state = maximise
+  borderless = True
+  extra_styling = False
+  inactive_color_offset = 0.9047619047619048
+  suppress_multiple_term_dialog = True
+[keybindings]
+  close_term = <Alt>asciicircum
+  close_window = <Alt>ampersand
+  zoom_in = <Primary><Shift>plus
+[profiles]
+  [[default]]
+    icon_bell = False
+    background_color = "#1a1b26"
+    background_darkness = 0.92
+    font = Meslo LGM Nerd Font 12
+    foreground_color = "#a9b1d6"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scroll_on_keystroke = False
+    scrollback_infinite = True
+    palette = "#1a1b26:#f7768e:#9ece6a:#e0af68:#7aa2f7:#9a7ecc:#4abaaf:#acb0d0:#4e5173:#f7768e:#9ece6a:#e0af68:#7aa2f7:#9a7ecc:#4abaaf:#acb0d0"
+    use_system_font = false
+    copy_on_selection = True
+    split_to_group = True
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+[plugins]

@@ -8,7 +8,21 @@ return {
     "saadparwaiz1/cmp_luasnip", -- for autocompletion
     "rafamadriz/friendly-snippets", -- useful snippets
     "onsails/lspkind.nvim", -- vs-code like pictograms
+    {
+      "Exafunction/codeium.nvim",
+      cmd = "Codeium",
+      build = ":Codeium Auth",
+      opts = {},
+    },
   },
+  ---@param opts cmp.ConfigSchema
+  opts = function(_, opts)
+    table.insert(opts.sources, 1, {
+      name = "codeium",
+      group_index = 1,
+      priority = 100,
+    })
+  end,
   config = function()
     local cmp = require("cmp")
 

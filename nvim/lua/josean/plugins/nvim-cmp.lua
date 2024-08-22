@@ -25,7 +25,6 @@ return {
   end,
   config = function()
     local cmp = require("cmp")
-
     local luasnip = require("luasnip")
 
     local lspkind = require("lspkind")
@@ -36,6 +35,10 @@ return {
     cmp.setup({
       completion = {
         completeopt = "menu,menuone,preview,noselect",
+      },
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
       },
       snippet = { -- configure how nvim-cmp interacts with snippet engine
         expand = function(args)

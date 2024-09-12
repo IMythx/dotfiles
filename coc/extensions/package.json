@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "coc-discord-rpc": ">=5.1.8",
+    "coc-html": ">=1.8.0",
+    "coc-prettier": ">=9.3.2"
+  },
+  "lastUpdate": 1725979027615
+}

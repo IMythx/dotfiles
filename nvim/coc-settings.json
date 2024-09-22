@@ -1,0 +1,7 @@
+{
+  "rpc.enabled": true,
+  "rpc.ignoreWorkspaces": [],
+  "rpc.showProblems": false,
+  "rpc.buttonEnabled": false,
+  "coc.preferences.formatOnSaveFiletypes": ["php", "blade", "blade.php"]
+}

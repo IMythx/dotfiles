@@ -14,12 +14,13 @@ set $mod Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # font pango:Meslo LGM Nerd Font 15px
-font pango:FontAwesome 14
+font pango:Ubuntu Nerd Font,Ubuntu Nerd Font Med:style=Bold,Medium,Regular 15
+
 
 # GET DEM BORDERS OUT OF HEREc:w
 #
 # Thanks Childz
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 0
                           # class                 border  backgr. text    indicator child_border
 for_window [class="^.*"] client.focused          #77dd77 #285577 #ffffff #2e9ef4   #285577
 
@@ -39,12 +40,14 @@ floating_modifier $mod
 
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec terminator 
+bindsym $mod+Return exec --no-startup-id terminator
 
 # kill focused window
 # bindsym $mod+space exec "/home/theprimeagen/dotfiles/awesome-streamerrc/ThePrimeagen/tmux2"
 # by deafult it has shift i have removed it 
 bindsym $mod+q kill
+
+bindsym $mod+ctrl+l exec --no-startup-id "~/lock.sh"
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
@@ -76,9 +79,7 @@ bindsym $mod+Shift+l move right
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move righttatus_command ~/.config/bumblebee-status/bumblebee-status \
- -t  iceberg-rainbow \
- -m  memory datetime hostname battery 
+bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
 bindsym $mod+z split h
@@ -175,8 +176,10 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-exec_always "setxkbmap -model pc104 -layout us,eg -variant ,, -option grp:alt_shift_toggle"
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+exec_always --no-startup-id "setxkbmap -model pc104 -layout us,eg -variant ,, -option grp:alt_shift_toggle"
+# exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
+# exec --no-startup-id xinput set-prop 9 295 -1
 
 
 # set $Locker i3lock && sleep 1
@@ -231,11 +234,11 @@ bindsym $mod+r mode "resize"
 
 
 bar {
-    font pango:FontAwesome, JetBrainsMonoNL NFM SemiBold:style=SemiBold,Regular 12.5
+    font pango:FontAwesome, Ubuntu Nerd Font,Ubuntu Nerd Font Med:style=Bold,Medium,Regular 13
     status_command ~/.config/bumblebee-status/bumblebee-status \
-    -t  iceberg-dark-powerline \
-    -m cpu disk memory datetime dunstctl pipewire system \
-    -p datetime.format="%Y/%m/%d %I:%M %p"
+    -t  greyish-powerline \
+    -m  sensors cpu disk memory datetime dunstctl pipewire pasource system \
+    -p  datetime.format="%Y/%m/%d %I:%M %p" sensors.show_freq="false"
     tray_padding 3
 }
 
@@ -254,17 +257,17 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 #
 # # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
 
 # Alsa audio controls.
-bindsym $mod+Shift+comma exec ~/.config/i3/scripts/alsa restore
-bindsym $mod+semicolon exec ~/.config/i3/scripts/alsa down Headphone
-bindsym $mod+comma exec ~/.config/i3/scripts/alsa up Headphone
+bindsym $mod+Shift+comma exec --no-startup-id ~/.config/i3/scripts/alsa restore
+bindsym $mod+semicolon exec --no-startup-id ~/.config/i3/scripts/alsa down Headphone
+bindsym $mod+comma exec --no-startup-id ~/.config/i3/scripts/alsa up Headphone
 bindsym $mod+m move workspace to output left
 
 # Suspend
-bindsym $mod+Shift+period exec systemctl suspend
+bindsym $mod+Shift+period exec --no-startup-id systemctl suspend
 
 
 # ## Screenshots
@@ -277,6 +280,11 @@ bindsym $mod+Shift+period exec systemctl suspend
 # bindsym Ctrl+$mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 # bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
 
+#start clipboard on startup
+exec_always --no-startup-id xfce4-clipman
+
+#open popup menu
+bindsym $mod+c exec --no-startup-id xfce4-popup-clipman
 
 ## Screenshots
 bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
@@ -293,9 +301,9 @@ bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection c
 for_window [class="x-terminal-emulator"] floating enable, resize set 1000 500, move position 0px 0px, border pixel 0, opacity 0.8
 
 # Setting bg 
-exec_always feh --bg-scale ~/bg.jpg
-exec xrandr --output HDMI-0 --mode 1920x1080 --rate 75
-exec screenkey -p fixed -g 12%x5%+85%-20%
+exec_always --no-startup-id feh --bg-scale ~/bg.png
+exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --rate 75
+exec --no-startup-id screenkey -p fixed -g 12%x5%+85%-20%
 # exec_always --no-startup-id polybar
 # exec componit -b
 # exec compton
